@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Configurar o cliente DynamoDB
 table_name = "InfraCloud-MyApplicationData"
-dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+dynamodb = boto3.resource('dynamodb', region_name='sa-east-1')
 table = dynamodb.Table(table_name)
 
 @app.route('/')
@@ -25,6 +25,10 @@ def index():
 
     # Renderizar os posts em uma página HTML
     return render_template('index.html', posts=items)
+
+@app.route('/health')
+def health():
+    return 'OK', 200
 
 @app.route('/post', methods=['POST'])
 def post():
