@@ -1,9 +1,11 @@
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, url_for
 import boto3
 import uuid
 from datetime import datetime
+import os
 
 app = Flask(__name__)
+
 table_name = "InfraCloud-MyApplicationData"
 dynamodb = boto3.resource('dynamodb', region_name='sa-east-1')
 table = dynamodb.Table(table_name)
@@ -17,9 +19,9 @@ def index():
     items.sort(key=lambda x: x['created_at'], reverse=True)
     return render_template('index.html', posts=items)
 
-    @app.route('/health')
-    def health():
-        return 'OK', 200
+@app.route('/health')
+def health():
+    return 'OK', 200
 
 @app.route('/post', methods=['POST'])
 def post():
