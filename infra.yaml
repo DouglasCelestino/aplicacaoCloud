@@ -118,13 +118,13 @@ Resources:
     
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: ami-04716897be83e3f04 # Substitua por uma AMI válida em sua região
+      ImageId: ami-04716897be83e3f04
       InstanceType: t2.medium
-      KeyName: chave_acesso # Substitua por sua chave pública EC2 Key Pair existente
+      KeyName: chave_acesso 
       SecurityGroupIds:
         - !Ref MySecurityGroup
       SubnetId: !Ref MySubnet
-      IamInstanceProfile: !Ref EC2InstanceProfile # Adicionando o instance profile
+      IamInstanceProfile: !Ref EC2InstanceProfile
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-MyEC2Instance"
@@ -133,12 +133,12 @@ Resources:
     
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
-      ImageId: ami-04716897be83e3f04 # Substitua pela AMI da sua aplicação
+      ImageId: ami-04716897be83e3f04
       InstanceType: t2.medium
       KeyName: chave_acesso
       SecurityGroups:
-        - Ref: MySecurityGroup # Referencie o seu Security Group aqui
-      IamInstanceProfile: !Ref EC2InstanceProfile # Adicionando o instance profile
+        - Ref: MySecurityGroup 
+      IamInstanceProfile: !Ref EC2InstanceProfile 
       UserData: 
         Fn::Base64: |
           #!/bin/bash
