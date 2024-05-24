@@ -1,13 +1,18 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Template para criação de infraestrutura para aplicação Cloud'
+Description: Template estendido com EC2 Auto Scaling, ALB e Dynamo
+
+
 Resources:
   MyVPC:
+    
     Type: AWS::EC2::VPC
     Properties:
       CidrBlock: 10.0.0.0/16
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-MyVPC"
+      
+
   MyInternetGateway:
     
     Type: AWS::EC2::InternetGateway
@@ -15,12 +20,17 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-MyInternetGateway"
+     
+
   GatewayAttachment:
+    
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
       VpcId: !Ref MyVPC
       InternetGatewayId: !Ref MyInternetGateway
+
   PublicSubnet1:
+    
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref MyVPC
@@ -30,7 +40,9 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-PublicSubnet1"
+
   PublicSubnet2:
+    
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref MyVPC
@@ -40,30 +52,40 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-PublicSubnet2"
+
   PublicRouteTable:
+    
     Type: AWS::EC2::RouteTable
     Properties:
       VpcId: !Ref MyVPC
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-PublicRouteTable"
+
   PublicRoute:
+    
     Type: AWS::EC2::Route
     Properties:
       RouteTableId: !Ref PublicRouteTable
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId: !Ref MyInternetGateway
+
   SubnetRouteTableAssociation1:
+    
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref PublicSubnet1
       RouteTableId: !Ref PublicRouteTable
+
   SubnetRouteTableAssociation2:
+    
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref PublicSubnet2
       RouteTableId: !Ref PublicRouteTable
+
   MySubnet:
+    
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref MyVPC
@@ -72,7 +94,9 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-MySubnet"
+
   MySecurityGroup:
+    
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Permitir SSH
@@ -89,10 +113,12 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-MySecurityGroup"
+
   MyEC2Instance:
+    
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: ami-0cdc2f24b2f67ea17 # Substitua por uma AMI válida em sua região
+      ImageId: ami-04716897be83e3f04 # Substitua por uma AMI válida em sua região
       InstanceType: t2.medium
       KeyName: chave_acesso # Substitua por sua chave pública EC2 Key Pair existente
       SecurityGroupIds:
@@ -102,10 +128,12 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-MyEC2Instance"
+
   AppLaunchConfig:
+    
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
-      ImageId: ami-0cdc2f24b2f67ea17 # Substitua pela AMI da sua aplicação
+      ImageId: ami-04716897be83e3f04 # Substitua pela AMI da sua aplicação
       InstanceType: t2.medium
       KeyName: chave_acesso
       SecurityGroups:
@@ -138,6 +166,7 @@ Resources:
           python3 app.py
 
   AppAutoScalingGroup:
+    
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       VPCZoneIdentifier:
@@ -327,7 +356,9 @@ Resources:
                   - dynamodb:Scan
                   - dynamodb:Query
                 Resource: !GetAtt MyDynamoDBTable.Arn
+
   DynamoDBEndpoint:
+    
     Type: AWS::EC2::VPCEndpoint
     Properties:
       VpcId: !Ref MyVPC

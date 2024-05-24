@@ -40,22 +40,24 @@
 
 2. **Criação da Stack com CloudFormation**:
     ```bash
-    aws cloudformation create-stack --InfraCloud MyInfrastructure --template-body file://path/to/infra.yaml
+    aws cloudformation create-stack --stack-name InfraCloud --template-body file://infra.yaml --capabilities CAPABILITY_IAM --region sa-east-1
+
     ```
 
 3. **Atualização da Stack com CloudFormation**:
     ```bash
-    aws cloudformation update-stack --InfraCloud MyInfrastructure --template-body file://path/to/infra.yaml
+    aws cloudformation update-stack --stack-name InfraCloud --template-body file://infra.yaml --capabilities CAPABILITY_IAM --region sa-east-1
+
     ```
 
 4. **Deletar a Stack com CloudFormation**:
     ```bash
-    aws cloudformation delete-stack --InfraCloud MyInfrastructure
+    aws cloudformation delete-stack --stack-name InfraCloud
     ```
 
 5. **Validação da Infraestrutura**:
     - Verifique se todos os recursos foram criados corretamente no console da AWS.
-    - Teste o acesso ao Load Balancer através do DNS público fornecido. (Aplicação está no DNS público do Load Balancer, com CRUD implementado de simples interface web.)
+    - Teste o acesso ao Load Balancer através do DNS público fornecido. (Aplicação está no DNS público do Load Balancer, com CRUD implementado de simples interface web)
     - Verifique se as instâncias EC2 estão sendo escaladas corretamente conforme a demanda.
 
 ## Relatório Detalhado de Previsão de Custos
