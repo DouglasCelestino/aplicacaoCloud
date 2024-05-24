@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 
 # Configurar o cliente DynamoDB
-table_name = "stackzada-MyApplicationData"
+table_name = "InfraCloud-MyApplicationData"
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 table = dynamodb.Table(table_name)
 
