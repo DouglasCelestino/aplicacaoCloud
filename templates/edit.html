@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,13 +17,37 @@
         }
         h1 {
             color: #333;
+            margin-bottom: 20px;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
         }
         form {
             background: #fff;
             padding: 20px;
-            margin: 20px 0;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            flex: 1;
+        }
+        .image-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .image-container img {
+            width: 100%;
+            max-width: 200px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .heart {
+            font-size: 48px;
+            color: red;
         }
         input[type="text"], button {
             padding: 10px;
@@ -45,14 +69,21 @@
 </head>
 <body>
     <h1>Editar Aposta</h1>
-    <form action="/edit/{{ post.Id }}" method="post">
-        <label for="title">Título:</label>
-        <input type="text" id="title" name="title" value="{{ post.Title }}" required>
-        <br>
-        <label for="content">Descrição:</label>
-        <input type="text" id="content" name="content" value="{{ post.Content }}" required>
-        <br>
-        <button type="submit">Atualizar</button>
-    </form>
+    <div class="container">
+        <form action="/edit/{{ post.Id }}" method="post">
+            <label for="title">Título:</label>
+            <input type="text" id="title" name="title" value="{{ post.Title }}" required>
+            <br>
+            <label for="content">Descrição:</label>
+            <input type="text" id="content" name="content" value="{{ post.Content }}" required>
+            <br>
+            <button type="submit">Atualizar</button>
+        </form>
+        <div class="image-container">
+            <img src="./imgs/demay_gato.png" alt="Imagem 1">
+            <div class="heart">&hearts;</div>
+            <img src="./imgs/paulao_mito.png" alt="Imagem 2">
+        </div>
+    </div>
 </body>
 </html>
