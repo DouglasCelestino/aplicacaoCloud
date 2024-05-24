@@ -52,7 +52,7 @@
 
 4. **Deletar a Stack com CloudFormation**:
     ```bash
-    aws cloudformation delete-stack --stack-name InfraCloud
+    aws cloudformation delete-stack --stack-name InfraCloud --region sa-east-1
     ```
 
 5. **Validação da Infraestrutura**:
